@@ -1,6 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+var url = require('url');
 
 const server = http.createServer((req, res) => {
     let filePath = '.' + req.url + '.html';
@@ -17,7 +18,9 @@ const server = http.createServer((req, res) => {
             });
         } else {
             res.writeHead(200, { 'Content-Type': 'text/html' });
-            res.end(content, 'utf-8');
+            var q = url.parse(req.url, true).query;
+            var txt = q.year + " " + q.month;
+            res.end(txt);
         }
     });
 });
